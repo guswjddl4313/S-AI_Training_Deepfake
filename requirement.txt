@@ -1,0 +1,7 @@
+evaluate
+transformers
+kaggle
+accelerate=0.33.0
+datasets==2.21.0
+imbalanced-learn==0.8.0
+pillow==9.4.0
