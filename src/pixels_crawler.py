@@ -3,13 +3,15 @@ import requests
 import time
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+
 
 # 상수
 PIXELS_URL = "https://www.pexels.com/ko-kr/search/face/"
-IMAGE_DIR = "./data/"
+IMAGE_DIR = "./1000_images_"
 
 # 크롬 드라이버 경로 설정
 chrome_options = Options()
@@ -25,7 +27,7 @@ service = Service("/usr/local/share/chromedriver")  # 여기서 '/path/to/chrome
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
 
-def crawling_pixels(row, image_name, last_height):
+def crawling_pixels(row, image_name, last_height, image_dir_path):
     # 소스코드 갱신
     while True:
         page_source = driver.page_source
@@ -38,13 +40,14 @@ def crawling_pixels(row, image_name, last_height):
                 img_src = img_tag[0].get('src')
                 print(img_src)
 
-                img_path = IMAGE_DIR + str(image_name) + '.jpg'
+                img_path = image_dir_path + str(image_name) + '.jpg'
                 download_image(img_src, img_path)
 
                 image_name += 1
 
-
-        from selenium.webdriver import ActionChains
+        row += 1
+        if image_name >= 1000:
+            break
 
         #ActionChains생성
         action = ActionChains(driver)
@@ -61,7 +64,7 @@ def crawling_pixels(row, image_name, last_height):
         driver.execute_script("window.scrollBy(0, -200);")
         time.sleep(3)
 
-        row += 1
+    return row
 
 
 def download_image(image_url, save_path):
@@ -80,20 +83,25 @@ def download_image(image_url, save_path):
 
 if __name__ == '__main__':
     try:
-        # 데이터 저장 디렉토리 생성
-        if not os.path.exists(IMAGE_DIR):
-            os.makedirs(IMAGE_DIR)
-
         # 웹 페이지 로드
         driver.get(PIXELS_URL)
 
         # 초기값
         row = 1
-        image_name = 0
+        dir_name = 0
         last_height = driver.execute_script("return document.body.scrollHeight")
         
         # 크롤링
-        crawling_pixels(row, image_name, last_height)
+        while True:
+            image_name = 0
+            # 데이터 저장 디렉토리 생성
+            image_dir_path = IMAGE_DIR + str(dir_name) + '/'
+            if not os.path.exists(image_dir_path):
+                os.makedirs(image_dir_path)
+
+            row = crawling_pixels(row, image_name, last_height, image_dir_path)
+
+            dir_name += 1
     
     except Exception as e:
         print(e)
