@@ -5,6 +5,18 @@ This project aims to develop a deepfake detection model with automated learning 
 **Project Duration:** 24.08.27 ~ 24.08.30
 
 ## Usage
+### Before running pixel_crawler.py
+```bash
+# linux chrome&driver install
+wget -N https://storage.googleapis.com/chrome-for-testing-public/128.0.6570.0/linux64/chromedriver-linux64.zip
+unzip chromedriver_linux64.zip
+chmod +x chromedriver
+sudo mv -f chromedriver /usr/local/share/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+```
 ### To perform tasks
 ```bash
 # Clone the repository
