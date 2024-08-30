@@ -4,6 +4,10 @@
 This project aims to develop a deepfake detection model with automated learning capabilities.  
 **Project Duration:** 24.08.27 ~ 24.08.30
 
+## Example
+![origin](https://github.com/user-attachments/assets/26de7784-4ba9-44c5-85d2-2cc5bab0a2f7)
+![after_process](https://github.com/user-attachments/assets/0e6b6988-52ef-44de-8bbb-0a1925d4053d)
+
 ## Usage
 ### Before running pixel_crawler.py
 ```bash
@@ -51,10 +55,10 @@ python run.py
 ## Architecture
 1. **Crawl 1000 face images using the Pixels crawler.**
 2. **Generate deepfake images:**
-   - Randomly split images(Real/Fake).
-   - Detect faces in images.
+   - Randomly split images. (Real/Fake)
+   - Detect faces in images using MediaPipe.
    - Generate face masking using MediaPipe.
-   - Select prompts randomly.
+   - Select prompts randomly. (feat.Chat-GPT4o)
    - Apply inpainting.
 3. **Randomly split the dataset (train, val, test).**
 4. **Fine-tune a pre-trained deep learning model.**
